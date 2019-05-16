@@ -2,7 +2,7 @@ package ram.io.first;
 
 public class SleepMessages {
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args)  {
         String[] importantInfo = {
                         "Mares eat oats",
                         "Does eat oats",
@@ -12,7 +12,15 @@ public class SleepMessages {
 
         for (String text : importantInfo) {
             //Pause for 4 Seconds
-            Thread.sleep(4000);
+            try {
+                if(Thread.interrupted()){
+                    throw new InterruptedException("Someone has interrupted the thread");
+                }
+                Thread.sleep(4000);
+            } catch (InterruptedException e) {
+                //we have been interrupted: no more messages
+                return;
+            }
             System.out.println(text);
         }
     }
